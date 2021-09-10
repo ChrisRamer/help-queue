@@ -12,8 +12,8 @@ function TicketList() {
 			location="4B"
 			names="Sleater and Kinney"
 			issie="Prop types are throwing an error." />
+		</React.Fragment>
 		);
-	</React.Fragment>
 }
 
 export default TicketList;;
