@@ -13,14 +13,6 @@ class TicketControl extends React.Component {
 		};
 	}
 
-	/*
-	handleClick = () => {
-		this.setState(prevState => ({
-			formVisibleOnPage: !prevState.formVisibleOnPage
-		}));
-	}
-	*/
-
 	handleClick = () => {
 		if (this.state.selectedTicket != null) {
 			this.setState({
@@ -32,6 +24,14 @@ class TicketControl extends React.Component {
 				formVisibleOnPage: !prevState.formVisibleOnPage
 			}));
 		}
+	}
+
+	handleDeletingTicket = (id) => {
+		const newMasterTicketList = this.state.masterTicketList.filter(ticket => ticket.id !== id);
+		this.setState({
+			masterTicketList: newMasterTicketList,
+			selectedTicket: null
+		});
 	}
 
 	handleAddingNewTicketToList = (newTicket) => {
@@ -52,7 +52,7 @@ class TicketControl extends React.Component {
 		let buttonText = null;
 
 		if (this.state.selectedTicket != null) {
-			currentlyVisibleState = <TicketDetail ticket = {this.state.selectedTicket} />;
+			currentlyVisibleState = <TicketDetail ticket = {this.state.selectedTicket} onClickingDelete = {this.handleDeletingTicket} />;
 			buttonText = "Return to Ticket List";
 		} else if (this.state.formVisibleOnPage) {
 			currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
