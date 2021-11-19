@@ -4,6 +4,7 @@ import NewTicketForm from "./NewTicketForm";
 import TicketList from "./TicketList";
 import TicketDetail from "./TicketDetail";
 import EditTicketForm from "./EditTicketForm";
+import PropTypes from "prop-types";
 
 class TicketControl extends React.Component {
 	constructor(props) {
@@ -76,7 +77,7 @@ class TicketControl extends React.Component {
 	}
 
 	handleChangingSelectedTicket = (id) => {
-		const selectedTicket = this.state.masterTicketList.filter(ticket => ticket.id === id)[0];
+		const selectedTicket = this.props.masterTicketList[id];
 		this.setState({selectedTicket: selectedTicket});
 	}
 
@@ -97,7 +98,7 @@ class TicketControl extends React.Component {
 			currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
 			buttonText = "Return to Ticket List";
 		} else {
-			currentlyVisibleState = <TicketList ticketList={this.state.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />;
+			currentlyVisibleState = <TicketList ticketList={this.props.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />;
 			buttonText = "Add Ticket";
 		}
 
@@ -110,6 +111,16 @@ class TicketControl extends React.Component {
 	}
 }
 
-TicketControl = connect()(TicketControl);
+TicketControl.propTypes = {
+	masterTicketList: PropTypes.object
+}
+
+const mapStateToProps = state => {
+	return {
+		masterTicketList: state
+	}
+}
+
+TicketControl = connect(mapStateToProps)(TicketControl);
 
 export default TicketControl;
